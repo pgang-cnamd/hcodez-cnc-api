@@ -83,4 +83,7 @@ targetCompatibility = 1.8
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     testCompile('org.springframework.boot:spring-boot-starter-test')
+
+    implementation 'com.github.pgang-cnamd:hcodez-code-engine:2.0.0'
+    compile 'joda-time:joda-time:2.10.2'
 }
