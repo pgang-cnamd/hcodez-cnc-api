@@ -6,9 +6,8 @@ package com.hcodez.cncapi;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class AppTest {
+public class ApplicationTest {
     @Test public void testAppHasAGreeting() {
-        App classUnderTest = new App();
-        assertNotNull("app should have a greeting", classUnderTest.getGreeting());
+        Application classUnderTest = new Application();
     }
 }
