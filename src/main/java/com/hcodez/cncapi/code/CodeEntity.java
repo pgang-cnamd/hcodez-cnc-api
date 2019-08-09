@@ -8,6 +8,8 @@ import org.joda.time.Instant;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import java.net.URL;
 
 @Component
@@ -17,6 +19,9 @@ import java.net.URL;
 @Entity
 public class CodeEntity {
 
+    @Getter
+    @Setter
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int cloudId;
 
     @Getter
