@@ -1,4 +1,6 @@
 package com.hcodez.cncapi.code;
 
-public class CodeRepository {
+import org.springframework.data.repository.CrudRepository;
+
+public interface CodeRepository extends CrudRepository<CodeEntity, Integer> {
 }
