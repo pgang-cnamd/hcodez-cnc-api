@@ -3,6 +3,7 @@ package com.hcodez.cncapi.code;
 import com.hcodez.codeengine.model.Code;
 import com.hcodez.codeengine.model.CodeType;
 import com.hcodez.codeengine.parser.CodeParser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -11,6 +12,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/code")
 public class CodeController {
+
+    @Autowired
+    private CodeRepository codeRepository;
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Code> getCodeList() {
