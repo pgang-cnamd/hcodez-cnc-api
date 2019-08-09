@@ -67,4 +67,17 @@ public class CodeEntity {
                 .withCodeType(this.getCodeType())
                 .build();
     }
+
+    public CodeEntity fromLibraryCode(Code libraryCode) {
+        return CodeEntity.builder()
+                .identifier(libraryCode.getIdentifier())
+                .owner(libraryCode.getOwner())
+                .passcode(libraryCode.getPasscode())
+                .codeType(libraryCode.getCodeType())
+                .name(libraryCode.getName())
+                .createTime(libraryCode.getCreateTime())
+                .updateTime(libraryCode.getUpdateTime())
+                .url(libraryCode.getUrl())
+                .build();
+    }
 }
