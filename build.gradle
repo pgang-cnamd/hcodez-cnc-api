@@ -86,4 +86,7 @@ dependencies {
 
     implementation 'com.github.pgang-cnamd:hcodez-code-engine:2.0.0'
     compile 'joda-time:joda-time:2.10.2'
+
+    compileOnly 'org.projectlombok:lombok:1.18.8'
+    annotationProcessor 'org.projectlombok:lombok:1.18.8'g
 }
