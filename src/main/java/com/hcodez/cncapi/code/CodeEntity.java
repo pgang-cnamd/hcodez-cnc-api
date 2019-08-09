@@ -4,12 +4,14 @@ import com.hcodez.codeengine.builder.CodeBuilder;
 import com.hcodez.codeengine.model.Code;
 import com.hcodez.codeengine.model.CodeType;
 import org.joda.time.Instant;
+import org.springframework.stereotype.Component;
 
 import java.net.URL;
 
-public class CodeInternal {
+@Component
+public class CodeEntity {
 
-    private int id;
+    private int cloud_id;
 
     private String identifier;
 
@@ -27,14 +29,14 @@ public class CodeInternal {
 
     private CodeType codeType;
 
-    public CodeInternal() {}
+    public CodeEntity() {}
 
-    public int getId() {
-        return id;
+    public int getCloud_id() {
+        return cloud_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCloud_id(int cloud_id) {
+        this.cloud_id = cloud_id;
     }
 
     public String getIdentifier() {
