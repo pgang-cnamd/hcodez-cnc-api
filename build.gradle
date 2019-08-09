@@ -81,7 +81,9 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-web") {
+//        exclude 'org.springframework.boot:spring-boot-starter-json'
+    }
     testCompile('org.springframework.boot:spring-boot-starter-test')
 
     implementation 'com.github.pgang-cnamd:hcodez-code-engine:2.0.0'
@@ -93,5 +95,7 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-data-jpa'
     compile 'mysql:mysql-connector-java'
 
-    compile 'com.h2database:h2:'
+    compile 'com.h2database:h2'
+
+    compile 'com.google.code.gson:gson:2.8.4'
 }
