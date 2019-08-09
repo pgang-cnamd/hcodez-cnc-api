@@ -3,57 +3,39 @@ package com.hcodez.cncapi.code;
 import com.hcodez.codeengine.builder.CodeBuilder;
 import com.hcodez.codeengine.model.Code;
 import com.hcodez.codeengine.model.CodeType;
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
 import org.joda.time.Instant;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.net.URL;
 
-@Component
 @Data
-@NoArgsConstructor
 @Builder
 @Entity
 public class CodeEntity {
 
-    @Getter
-    @Setter
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int cloudId;
+    private Integer cloudId;
 
-    @Getter
-    @Setter
     private String identifier;
 
-    @Getter
-    @Setter
     private String owner;
 
-    @Getter
-    @Setter
     private String passcode;
 
-    @Getter
-    @Setter
     private String name;
 
-    @Getter
-    @Setter
     private URL url;
 
-    @Getter
-    @Setter
     private Instant createTime;
 
-    @Getter
-    @Setter
     private Instant updateTime;
 
-    @Getter
-    @Setter
     private CodeType codeType;
 
     /**
