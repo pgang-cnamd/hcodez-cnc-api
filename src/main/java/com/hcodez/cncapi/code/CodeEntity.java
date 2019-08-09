@@ -55,7 +55,7 @@ public class CodeEntity {
                 .build();
     }
 
-    public CodeEntity fromLibraryCode(Code libraryCode) {
+    public static CodeEntity fromLibraryCode(Code libraryCode) {
         return CodeEntity.builder()
                 .identifier(libraryCode.getIdentifier())
                 .owner(libraryCode.getOwner())
