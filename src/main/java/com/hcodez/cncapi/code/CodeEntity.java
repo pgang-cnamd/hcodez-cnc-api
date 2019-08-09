@@ -7,12 +7,14 @@ import lombok.*;
 import org.joda.time.Instant;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.Entity;
 import java.net.URL;
 
 @Component
 @Data
 @NoArgsConstructor
 @Builder
+@Entity
 public class CodeEntity {
 
     private int cloudId;
