@@ -23,7 +23,7 @@ public class CodeController {
 
     @RequestMapping(value = "/parse",
             method = RequestMethod.POST,
-            consumes = "application/text",
+            consumes = "text/plain",
             produces = "application/json")
     public List<String> parseInputString(@RequestBody String input) {
         final List<Code> codeList = new CodeParser()
