@@ -1,5 +1,6 @@
 package com.hcodez.cncapi.code;
 
+import com.google.gson.annotations.SerializedName;
 import com.hcodez.codeengine.builder.CodeBuilder;
 import com.hcodez.codeengine.model.Code;
 import com.hcodez.codeengine.model.CodeType;
@@ -7,36 +8,48 @@ import lombok.Builder;
 import lombok.Data;
 import org.joda.time.Instant;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.net.URL;
 
 @Data
 @Builder
 @Entity
+@Table(name = "codes")
 public class CodeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer cloudId;
+    @SerializedName("cloud_id")
+    @Column(name="id")
+    private Integer id;
 
+    @Column(name = "identifier")
     private String identifier;
 
+    @Column(name = "owner")
     private String owner;
 
+    @Column(name = "passcode")
     private String passcode;
 
+    @Column(name = "name")
     private String name;
 
+    @Column(name = "url")
     private URL url;
 
+    @SerializedName("create_time")
+    @Column(name = "create_time")
     private Instant createTime;
 
+    @SerializedName("update_time")
+    @Column(name = "update_time")
     private Instant updateTime;
 
+    @SerializedName("code_type")
+    @Column(name = "code_typeg")
     private CodeType codeType;
+
 
     /**
      * Create a library Code model from a CodeEntity
