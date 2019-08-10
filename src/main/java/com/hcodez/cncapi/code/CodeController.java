@@ -18,7 +18,7 @@ import java.util.List;
 public class CodeController {
 
     @Autowired
-    private CodeRepository codeRepository;
+    private CodeService codeService;
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Code> getCodeList() {
@@ -27,32 +27,24 @@ public class CodeController {
 
     @RequestMapping(value = "/parse",
             method = RequestMethod.POST,
-            consumes = MediaType.TEXT_PLAIN_VALUE,
+            consumes = "text/plain;charset=UTF-8",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<CodeEntity>> parseInputString(/*@RequestBody String input*/) {
-//        final List<Code> codeList = new CodeParser()
-//                .addCodeTypes(CodeType.all())
-//                .parseString(input);
-//
+    public ResponseEntity<List<CodeEntity>> parseInputString(@RequestBody String input) {
+        final List<Code> codeList = new CodeParser()
+                .addCodeTypes(CodeType.all())
+                .parseString(input);
+
         final List<CodeEntity> codeEntityList = new ArrayList<>();
-//        for (Code code : codeList) {
-//            codeEntityList.add(CodeEntity.fromLibraryCode(code));
-//        }
-//
-//        return codeEntityList;
-        codeEntityList.add(CodeEntity
-                .builder()
-                .identifier("ab12")
-                .owner("dada3")
-                .passcode("dkl23mdasa")
-                .codeType(CodeType.PUBLIC_WITH_PASSCODE)
-                .build());
+        for (Code code : codeList) {
+            codeEntityList.add(CodeEntity.fromLibraryCode(code));
+        }
+
         return new ResponseEntity<List<CodeEntity>>(codeEntityList, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CodeEntity> getByIdentifierAndOwner(@RequestParam String identifier, @RequestParam String owner) {
-        return codeRepository.findByIdentifierAndOwner(identifier, owner);
+        return codeService.findByIdentifierAndOwner(identifier, owner);
     }
 }
