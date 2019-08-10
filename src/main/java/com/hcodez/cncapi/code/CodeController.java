@@ -39,7 +39,7 @@ public class CodeController {
             codeEntityList.add(CodeEntity.fromLibraryCode(code));
         }
 
-        return new ResponseEntity<List<CodeEntity>>(codeEntityList, HttpStatus.OK);
+        return new ResponseEntity<>(codeEntityList, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET,
