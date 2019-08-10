@@ -4,8 +4,10 @@ import com.google.gson.annotations.SerializedName;
 import com.hcodez.codeengine.builder.CodeBuilder;
 import com.hcodez.codeengine.model.Code;
 import com.hcodez.codeengine.model.CodeType;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.joda.time.Instant;
 
 import javax.persistence.*;
@@ -13,6 +15,8 @@ import java.net.URL;
 
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "codes")
 public class CodeEntity {
@@ -47,7 +51,7 @@ public class CodeEntity {
     private Instant updateTime;
 
     @SerializedName("code_type")
-    @Column(name = "code_typeg")
+    @Column(name = "code_type")
     private CodeType codeType;
 
 

@@ -1,6 +1,5 @@
 package com.hcodez.cncapi.code;
 
-import com.google.gson.Gson;
 import com.hcodez.codeengine.model.Code;
 import com.hcodez.codeengine.model.CodeType;
 import com.hcodez.codeengine.parser.CodeParser;
@@ -42,9 +41,28 @@ public class CodeController {
         return new ResponseEntity<>(codeEntityList, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET,
+    @RequestMapping(value = "/textForm/{textForm}",
+            method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CodeEntity> getByIdentifierAndOwner(@RequestParam String identifier, @RequestParam String owner) {
-        return codeService.findByIdentifierAndOwner(identifier, owner);
+    public List<CodeEntity> getByTextForm(@PathVariable String textForm) {
+        return codeService.findByTextForm(textForm);
+    }
+
+    @RequestMapping(method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<CodeEntity>> createNewCode(@RequestBody CodeEntity codeEntity) {
+
+        List<CodeEntity> codeEntityList = new ArrayList<>();
+        codeEntityList.add(codeService.saveNew(codeEntity));
+
+        return new ResponseEntity<>(codeEntityList, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{id}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<CodeEntity>> getById(@PathVariable Integer id) {
+        return new ResponseEntity<>(codeService.findById(id), HttpStatus.OK);
     }
 }

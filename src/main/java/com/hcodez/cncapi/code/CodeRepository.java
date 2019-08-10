@@ -1,9 +1,11 @@
 package com.hcodez.cncapi.code;
 
+import com.hcodez.codeengine.model.CodeType;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.List;
-
 public interface CodeRepository extends CrudRepository<CodeEntity, Integer> {
-    List<CodeEntity> findByIdentifierAndOwner(String identifier, String owner);
+    CodeEntity findCodeEntityByIdentifierAndOwnerAndPasscodeAndCodeType(String identifier,
+                                                                        String owner,
+                                                                        String passcode,
+                                                                        CodeType codeType);
 }
