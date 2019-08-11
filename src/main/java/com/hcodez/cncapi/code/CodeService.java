@@ -1,5 +1,6 @@
 package com.hcodez.cncapi.code;
 
+import com.hcodez.cncapi.user.UserService;
 import com.hcodez.codeengine.model.Code;
 import com.hcodez.codeengine.model.CodeType;
 import com.hcodez.codeengine.parser.CodeParser;
@@ -24,6 +25,9 @@ public class CodeService {
     @Autowired
     private CodeRepository codeRepository;
 
+    @Autowired
+    private UserService userService;
+
 
     public List<CodeEntity> findCodes() { // FIXME: 2019-08-11 method must actually return all of a user's codes
         return (List<CodeEntity>) codeRepository.findAll();
@@ -37,11 +41,15 @@ public class CodeService {
         return list;
     }
 
-    public List<CodeEntity> createCode(@Nonnull CodeEntity codeEntity) {
+    public List<CodeEntity> createCode(@Nonnull CodeEntity codeEntity, String jwt) {
         final List<CodeEntity> list = new ArrayList<>();
+
+        String owner = userService.getOwner(jwt).orElse(null);
+        if (owner == null) return list;
 
         codeEntity.setCreateTime(Instant.now());
         codeEntity.setUpdateTime(Instant.now());
+        codeEntity.setOwner(owner);
 
         CodeEntity newCodeEntity = codeRepository.save(codeEntity);
         newCodeEntity = setUrlForCodeEntity(newCodeEntity);

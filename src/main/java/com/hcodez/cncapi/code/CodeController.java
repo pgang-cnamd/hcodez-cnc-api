@@ -29,12 +29,9 @@ public class CodeController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<CodeEntity>> createCode(@RequestBody CodeEntity codeEntity) {
-        List<CodeEntity> codeEntityList = codeService.createCode(codeEntity);
-
-        if (codeEntityList.size() == 0)
-            return new ResponseEntity<>(codeEntityList, HttpStatus.NOT_MODIFIED);
-        return new ResponseEntity<>(codeEntityList, HttpStatus.OK);
+    public ResponseEntity<List<CodeEntity>> createCode(@RequestBody CodeEntity codeEntity,
+                                                       @RequestHeader("Authorization") String jwt) {
+        return new ResponseEntity<>(codeService.createCode(codeEntity, jwt.substring(7)), HttpStatus.OK);
     }
 
     @PostMapping(value = "/parse",
