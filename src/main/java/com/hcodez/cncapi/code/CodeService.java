@@ -63,6 +63,7 @@ public class CodeService {
                             code.getOwner(),
                             code.getPasscode(),
                             code.getCodeType());
+            if (codeEntity != null) codeEntityList.add(codeEntity);
         }
 
         return codeEntityList;
