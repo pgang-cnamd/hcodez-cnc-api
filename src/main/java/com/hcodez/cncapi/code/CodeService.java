@@ -1,8 +1,5 @@
 package com.hcodez.cncapi.code;
 
-import com.hcodez.codeengine.model.Code;
-import com.hcodez.codeengine.model.CodeType;
-import com.hcodez.codeengine.parser.CodeParser;
 import org.joda.time.Instant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,22 +14,6 @@ public class CodeService {
 
     @Autowired
     private CodeRepository codeRepository;
-
-    List<CodeEntity> findByTextForm(@Nonnull String textForm) {
-        List<CodeEntity> list = new ArrayList<>();
-
-        Code dummyCode = new CodeParser().addCodeTypes(CodeType.all()).parseSingle(textForm);
-        if (dummyCode == null) return list;
-
-        CodeEntity result = codeRepository
-                .findCodeEntityByIdentifierAndOwnerAndPasscodeAndCodeType(dummyCode.getIdentifier(),
-                        dummyCode.getOwner(),
-                        dummyCode.getPasscode(),
-                        dummyCode.getCodeType());
-        if (result != null) list.add(result);
-
-        return list;
-    }
 
     CodeEntity saveNew(@Nonnull CodeEntity codeEntity) {
         codeEntity.setCreateTime(Instant.now());

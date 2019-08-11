@@ -41,13 +41,6 @@ public class CodeController {
         return new ResponseEntity<>(codeEntityList, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/textForm/{textForm}",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CodeEntity> getByTextForm(@PathVariable String textForm) {
-        return codeService.findByTextForm(textForm);
-    }
-
     @RequestMapping(method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
