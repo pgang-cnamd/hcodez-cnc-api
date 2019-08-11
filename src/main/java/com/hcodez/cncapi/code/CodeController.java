@@ -22,7 +22,7 @@ public class CodeController {
 
     @GetMapping
     public ResponseEntity<List<CodeEntity>> getCodes() {
-        return new ResponseEntity<List<CodeEntity>>(codeService.findCodes(), HttpStatus.OK);
+        return new ResponseEntity<>(codeService.findCodes(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}",
@@ -34,9 +34,10 @@ public class CodeController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CodeEntity>> createCode(@RequestBody CodeEntity codeEntity) {
-        List<CodeEntity> codeEntityList = new ArrayList<>();
-        codeEntityList.add(codeService.createCode(codeEntity));
+        List<CodeEntity> codeEntityList = codeService.createCode(codeEntity);
 
+        if (codeEntityList.size() == 0)
+            return new ResponseEntity<>(codeEntityList, HttpStatus.NOT_MODIFIED);
         return new ResponseEntity<>(codeEntityList, HttpStatus.OK);
     }
 

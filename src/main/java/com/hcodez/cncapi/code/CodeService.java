@@ -30,18 +30,24 @@ public class CodeService {
         return list;
     }
 
-    public CodeEntity createCode(@Nonnull CodeEntity codeEntity) {
+    public List<CodeEntity> createCode(@Nonnull CodeEntity codeEntity) {
+        final List<CodeEntity> list = new ArrayList<>();
+
         codeEntity.setCreateTime(Instant.now());
         codeEntity.setUpdateTime(Instant.now());
 
-        final CodeEntity newCodeEntity = codeRepository.save(codeEntity);
+        CodeEntity newCodeEntity = codeRepository.save(codeEntity);
         try {
-            newCodeEntity.setUrl(new URL("http://localhost:8080/code/" +
+            newCodeEntity.setUrl(new URL("http://localhost:8080" +
+                    "/code/" +
                     newCodeEntity.getId()));
         } catch (MalformedURLException e) {
-            return null;
+            return list;
         }
-        return newCodeEntity;
+
+        list.add(newCodeEntity);
+
+        return list;
     }
 
     public List<CodeEntity> updateCodeById(@Nonnull Integer id, @Nonnull CodeEntity codeEntity) {
