@@ -1,5 +1,8 @@
 package com.hcodez.cncapi.code;
 
+import com.hcodez.codeengine.model.Code;
+import com.hcodez.codeengine.model.CodeType;
+import com.hcodez.codeengine.parser.CodeParser;
 import org.joda.time.Instant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +16,10 @@ import java.util.Optional;
 
 @Service
 public class CodeService {
+
+    private static final String PROTOCOL = "http";
+    private static final String HOSTNAME = "localhost";
+    private static final String PORT     = ":8080";
 
     @Autowired
     private CodeRepository codeRepository;
@@ -37,17 +44,28 @@ public class CodeService {
         codeEntity.setUpdateTime(Instant.now());
 
         CodeEntity newCodeEntity = codeRepository.save(codeEntity);
-        try {
-            newCodeEntity.setUrl(new URL("http://localhost:8080" +
-                    "/code/" +
-                    newCodeEntity.getId()));
-        } catch (MalformedURLException e) {
-            return list;
-        }
-
+        newCodeEntity = setUrlForCodeEntity(newCodeEntity);
         list.add(newCodeEntity);
 
         return list;
+    }
+
+    public List<CodeEntity> parseCodeFromString(@Nonnull String input) {
+        final List<Code> codeList = new CodeParser()
+                .addCodeTypes(CodeType.all())
+                .parseString(input);
+
+        final List<CodeEntity> codeEntityList = new ArrayList<>();
+        for (Code code : codeList) {
+            CodeEntity codeEntity = codeRepository
+                    .findCodeEntityByIdentifierAndOwnerAndPasscodeAndCodeType(
+                            code.getIdentifier(),
+                            code.getOwner(),
+                            code.getPasscode(),
+                            code.getCodeType());
+        }
+
+        return codeEntityList;
     }
 
     public List<CodeEntity> updateCodeById(@Nonnull Integer id, @Nonnull CodeEntity codeEntity) {
@@ -67,8 +85,6 @@ public class CodeService {
         toBeUpdated.setName(codeEntity.getName());
 
         CodeEntity updatedCodeEntity = codeRepository.save(toBeUpdated);
-        list.add(updatedCodeEntity);
-
         return list;
     }
 
@@ -76,5 +92,52 @@ public class CodeService {
         if (!codeRepository.existsById(id)) return false;
         codeRepository.deleteById(id);
         return !codeRepository.existsById(id);
+    }
+
+    private URL getUrlForId(Integer id) throws MalformedURLException {
+        if (id == null) {
+            return null;
+        }
+        return new URL(
+                PROTOCOL +
+                        "://" +
+                        HOSTNAME +
+                        PORT +
+                        "/code/" +
+                        id.toString());
+    }
+
+    private CodeEntity setUrlForCodeEntity(CodeEntity codeEntity) {
+        if (codeEntity == null) {
+            return null;
+        }
+
+        URL codeEntityUrl = null;
+        try {
+            codeEntityUrl = getUrlForId(codeEntity.getId());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        if (codeEntityUrl == null) {
+            return codeEntity;
+        }
+
+        codeEntity.setUrl(codeEntityUrl);
+
+        return codeRepository.save(codeEntity);
+    }
+
+    private List<CodeEntity> setUrlForCodeEntities(List<CodeEntity> codeEntities) {
+        if (codeEntities.size() == 0) {
+            return codeEntities;
+        }
+
+        List<CodeEntity> newList = new ArrayList<>();
+
+        for (CodeEntity codeEntity: codeEntities) {
+            codeEntity = setUrlForCodeEntity(codeEntity);
+            newList.add(codeEntity);
+        }
+        return newList;
     }
 }

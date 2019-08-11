@@ -39,7 +39,7 @@ public class CodeEntity {
     @Column(name = "name")
     private String name;
 
-    @Column(insertable = false, updatable = false)
+    @Column(name = "url")
     private URL url;
 
     @SerializedName("create_time")

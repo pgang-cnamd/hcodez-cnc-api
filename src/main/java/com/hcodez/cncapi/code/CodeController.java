@@ -45,16 +45,7 @@ public class CodeController {
             consumes = "text/plain;charset=UTF-8",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CodeEntity>> parseCodesFromString(@RequestBody String input) {
-        final List<Code> codeList = new CodeParser()
-                .addCodeTypes(CodeType.all())
-                .parseString(input);
-
-        final List<CodeEntity> codeEntityList = new ArrayList<>();
-        for (Code code : codeList) {
-            codeEntityList.add(CodeEntity.fromLibraryCode(code));
-        }
-
-        return new ResponseEntity<>(codeEntityList, HttpStatus.OK);
+        return new ResponseEntity<>(codeService.parseCodeFromString(input), HttpStatus.OK);
     }
 
     @PutMapping(value = "/{id}",
