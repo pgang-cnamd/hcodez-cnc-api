@@ -47,19 +47,27 @@ public class CodeService {
     public List<CodeEntity> updateCodeById(@Nonnull Integer id, @Nonnull CodeEntity codeEntity) {
         final List<CodeEntity> list = new ArrayList<>();
 
-        final Optional<CodeEntity> dbCodeEntityOptional = codeRepository.findById(id);
+        if (!codeRepository.existsById(id)) return list;
 
-        if (!dbCodeEntityOptional.isPresent()) return list;
+        CodeEntity toBeUpdated = codeRepository.findById(id).get();
 
-        codeEntity.setId(dbCodeEntityOptional.get().getId());
+        if (!toBeUpdated.getId().equals(codeEntity.getId())) return list;
 
-        final CodeEntity updatedCodeEntity = codeRepository.save(codeEntity);
+        toBeUpdated.setIdentifier(codeEntity.getIdentifier());
+        toBeUpdated.setPasscode(codeEntity.getPasscode());
+        toBeUpdated.setCodeType(codeEntity.getCodeType());
+        toBeUpdated.setUpdateTime(Instant.now());
+        toBeUpdated.setContentId(codeEntity.getContentId());
+        toBeUpdated.setName(codeEntity.getName());
+
+        CodeEntity updatedCodeEntity = codeRepository.save(toBeUpdated);
         list.add(updatedCodeEntity);
 
         return list;
     }
 
     public boolean deleteCodeById(@Nonnull Integer id) {
+        if (!codeRepository.existsById(id)) return false;
         codeRepository.deleteById(id);
         return !codeRepository.existsById(id);
     }

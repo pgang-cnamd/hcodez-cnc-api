@@ -21,8 +21,8 @@ public class CodeController {
 
 
     @GetMapping
-    public ResponseEntity<List<Code>> getCodes() {
-        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
+    public ResponseEntity<List<CodeEntity>> getCodes() {
+        return new ResponseEntity<List<CodeEntity>>(codeService.findCodes(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}",
@@ -61,11 +61,14 @@ public class CodeController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CodeEntity>> updateCodeById(@PathVariable Integer id,
                                                            @RequestBody CodeEntity codeEntity) {
-        return new ResponseEntity<>(new ArrayList<CodeEntity>(), HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<>(codeService.updateCodeById(id, codeEntity), HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity deleteCodeById(@PathVariable Integer id) {
-        return new ResponseEntity(HttpStatus.NOT_IMPLEMENTED);
+        boolean success = codeService.deleteCodeById(id);
+
+        return success ? new ResponseEntity(HttpStatus.OK) :
+                new ResponseEntity(HttpStatus.EXPECTATION_FAILED);
     }
 }
