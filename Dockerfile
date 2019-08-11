@@ -9,4 +9,6 @@ RUN /cnc-api/gradlew build
 
 RUN mv /cnc-api/build/libs/cnc-api.jar /cnc-api.jar
 
+EXPOSE 8080
+
 ENTRYPOINT java -jar /cnc-api.jar
