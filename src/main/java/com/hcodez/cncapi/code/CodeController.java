@@ -1,15 +1,11 @@
 package com.hcodez.cncapi.code;
 
-import com.hcodez.codeengine.model.Code;
-import com.hcodez.codeengine.model.CodeType;
-import com.hcodez.codeengine.parser.CodeParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController("codeController")
@@ -45,7 +41,7 @@ public class CodeController {
             consumes = "text/plain;charset=UTF-8",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CodeEntity>> parseCodesFromString(@RequestBody String input) {
-        return new ResponseEntity<>(codeService.parseCodeFromString(input), HttpStatus.OK);
+        return new ResponseEntity<>(codeService.parseCodesFromString(input), HttpStatus.OK);
     }
 
     @PutMapping(value = "/{id}",

@@ -50,7 +50,7 @@ public class CodeService {
         return list;
     }
 
-    public List<CodeEntity> parseCodeFromString(@Nonnull String input) {
+    public List<CodeEntity> parseCodesFromString(@Nonnull String input) {
         final List<Code> codeList = new CodeParser()
                 .addCodeTypes(CodeType.all())
                 .parseString(input);
