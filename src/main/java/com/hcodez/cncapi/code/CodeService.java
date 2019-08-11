@@ -3,14 +3,11 @@ package com.hcodez.cncapi.code;
 import com.hcodez.codeengine.model.Code;
 import com.hcodez.codeengine.model.CodeType;
 import com.hcodez.codeengine.parser.CodeParser;
+import org.joda.time.Instant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Nonnull;
-import org.joda.time.Instant;
-
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
