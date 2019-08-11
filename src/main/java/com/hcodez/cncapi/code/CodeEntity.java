@@ -54,7 +54,11 @@ public class CodeEntity {
     @Column(name = "code_type")
     private CodeType codeType;
 
+    @SerializedName("content_id")
+    @Column(name = "content_id")
+    private Integer contentId;
 
+    
     /**
      * Create a library Code model from a CodeEntity
      * @return the Code model built
