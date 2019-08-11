@@ -28,14 +28,14 @@ public class CodeController {
     @GetMapping(value = "/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CodeEntity>> getCodeById(@PathVariable Integer id) {
-        return new ResponseEntity<>(codeService.findById(id), HttpStatus.OK);
+        return new ResponseEntity<>(codeService.findCodeById(id), HttpStatus.OK);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CodeEntity>> createCode(@RequestBody CodeEntity codeEntity) {
         List<CodeEntity> codeEntityList = new ArrayList<>();
-        codeEntityList.add(codeService.saveNew(codeEntity));
+        codeEntityList.add(codeService.createCode(codeEntity));
 
         return new ResponseEntity<>(codeEntityList, HttpStatus.OK);
     }

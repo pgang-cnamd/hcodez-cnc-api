@@ -15,13 +15,13 @@ public class CodeService {
     @Autowired
     private CodeRepository codeRepository;
 
-    CodeEntity saveNew(@Nonnull CodeEntity codeEntity) {
+    public CodeEntity createCode(@Nonnull CodeEntity codeEntity) {
         codeEntity.setCreateTime(Instant.now());
         codeEntity.setUpdateTime(Instant.now());
         return codeRepository.save(codeEntity);
     }
 
-    public List<CodeEntity> findById(@Nonnull Integer id) {
+    public List<CodeEntity> findCodeById(@Nonnull Integer id) {
         Optional<CodeEntity> result = codeRepository.findById(id);
         List<CodeEntity> list = new ArrayList<>();
 
