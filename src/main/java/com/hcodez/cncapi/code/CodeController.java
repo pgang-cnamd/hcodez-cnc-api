@@ -19,16 +19,31 @@ public class CodeController {
     @Autowired
     private CodeService codeService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public List<Code> getCodeList() {
-        return new ArrayList<>();
+
+    @GetMapping
+    public ResponseEntity<List<Code>> getCodes() {
+        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/parse",
-            method = RequestMethod.POST,
+    @GetMapping(value = "/{id}",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<CodeEntity>> getCodeById(@PathVariable Integer id) {
+        return new ResponseEntity<>(codeService.findById(id), HttpStatus.OK);
+    }
+
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<CodeEntity>> createCode(@RequestBody CodeEntity codeEntity) {
+        List<CodeEntity> codeEntityList = new ArrayList<>();
+        codeEntityList.add(codeService.saveNew(codeEntity));
+
+        return new ResponseEntity<>(codeEntityList, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/parse",
             consumes = "text/plain;charset=UTF-8",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<CodeEntity>> parseInputString(@RequestBody String input) {
+    public ResponseEntity<List<CodeEntity>> parseCodesFromString(@RequestBody String input) {
         final List<Code> codeList = new CodeParser()
                 .addCodeTypes(CodeType.all())
                 .parseString(input);
@@ -41,21 +56,16 @@ public class CodeController {
         return new ResponseEntity<>(codeEntityList, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.POST,
+    @PutMapping(value = "/{id}",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<CodeEntity>> createNewCode(@RequestBody CodeEntity codeEntity) {
-
-        List<CodeEntity> codeEntityList = new ArrayList<>();
-        codeEntityList.add(codeService.saveNew(codeEntity));
-
-        return new ResponseEntity<>(codeEntityList, HttpStatus.OK);
+    public ResponseEntity<List<CodeEntity>> updateCodeById(@PathVariable Integer id,
+                                                           @RequestBody CodeEntity codeEntity) {
+        return new ResponseEntity<>(new ArrayList<CodeEntity>(), HttpStatus.NOT_IMPLEMENTED);
     }
 
-    @RequestMapping(value = "/{id}",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<CodeEntity>> getById(@PathVariable Integer id) {
-        return new ResponseEntity<>(codeService.findById(id), HttpStatus.OK);
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity deleteCodeById(@PathVariable Integer id) {
+        return new ResponseEntity(HttpStatus.NOT_IMPLEMENTED);
     }
 }
