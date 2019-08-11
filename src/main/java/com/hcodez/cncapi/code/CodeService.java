@@ -44,11 +44,23 @@ public class CodeService {
         return newCodeEntity;
     }
 
-    public List<CodeEntity> updateCodeById(@Nonnull Integer id) {
-        return new ArrayList<>();
+    public List<CodeEntity> updateCodeById(@Nonnull Integer id, @Nonnull CodeEntity codeEntity) {
+        final List<CodeEntity> list = new ArrayList<>();
+
+        final Optional<CodeEntity> dbCodeEntityOptional = codeRepository.findById(id);
+
+        if (!dbCodeEntityOptional.isPresent()) return list;
+
+        codeEntity.setId(dbCodeEntityOptional.get().getId());
+
+        final CodeEntity updatedCodeEntity = codeRepository.save(codeEntity);
+        list.add(updatedCodeEntity);
+
+        return list;
     }
 
     public boolean deleteCodeById(@Nonnull Integer id) {
-        return false;
+        codeRepository.deleteById(id);
+        return !codeRepository.existsById(id);
     }
 }
