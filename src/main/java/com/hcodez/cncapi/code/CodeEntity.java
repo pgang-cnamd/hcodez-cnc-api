@@ -39,11 +39,11 @@ public class CodeEntity {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "url")
+    @Column(insertable = false, updatable = false)
     private URL url;
 
     @SerializedName("create_time")
-    @Column(name = "create_time")
+    @Column(name = "create_time", updatable = false)
     private Instant createTime;
 
     @SerializedName("update_time")
