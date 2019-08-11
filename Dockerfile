@@ -10,5 +10,3 @@ RUN /cnc-api/gradlew build
 RUN mv /cnc-api/build/libs/cnc-api.jar /cnc-api.jar
 
 ENTRYPOINT java -jar /cnc-api.jar
-
-
